@@ -1,0 +1,16 @@
+.shop-container {
+    display: flex;
+}
+
+.product-area {
+    width: 70%;
+    margin: 0 20px 0px 15%;
+    border-right: 1px solid gray;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.cart-area {
+    width: 25%;
+    box-sizing: border-box;
+}
