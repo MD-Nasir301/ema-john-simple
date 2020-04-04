@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import {UserContext} from '../../App'
+// import {UserContext} from '../../App'
+import {useAuth} from '../login/useAuth'
 
 const Cart = (props) => {
      const cart = props.cart
-     const user = useContext(UserContext)
+    //  const user = useContext(UserContext)
+    const auth = useAuth()
+    console.log(auth);
 
      const preTotal =cart.reduce((total, prd) => total+prd.price*prd.quantity,0).toFixed(2)
      const total =Number(preTotal)
@@ -43,7 +46,7 @@ const Cart = (props) => {
             {
                 props.children
             }     
-            <p> {user} </p>       
+            {/* <p> {user} </p>        */}
         </div>
     );
 };

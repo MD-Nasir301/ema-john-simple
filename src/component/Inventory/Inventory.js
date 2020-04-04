@@ -6,7 +6,7 @@ const Inventory = () => {
     const handleAddInventory = ()=>{
         const product = fakeData
         console.log("before post",product.length,product);
-        fetch('http://localhost:3100/addProduct',{
+        fetch('https://blooming-thicket-11100.herokuapp.com/addProduct',{
             method: 'post',
             body: JSON.stringify(product),
             headers: {

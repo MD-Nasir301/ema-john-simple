@@ -12,7 +12,7 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:3100/product')
+        fetch('https://blooming-thicket-11100.herokuapp.com/product')
         .then(res => res.json())
         .then(data => 
             setProducts(data)

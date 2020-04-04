@@ -13,15 +13,15 @@ import NotFound from './component/NotFound/NotFound';
 import ProductDetails from './component/ProductDetails/ProductDetails';
 import Login from './component/login/Login';
 import Inventory from './component/Inventory/Inventory';
+import { AuthContextProvider,PrivateRoute  } from './component/login/useAuth';
+import Shipment from './component/Cart/Shipment/Shipment';
 
-
-export const UserContext = createContext();
 
 
 function App() {
   return (
     <div>    
-      <UserContext.Provider value="Babu">
+      <AuthContextProvider>
        <Header></Header>
       <Router>
         <Switch>
@@ -42,6 +42,10 @@ function App() {
             <Login></Login>
           </Route>
 
+          <PrivateRoute  path='/shipment'>
+            <Shipment></Shipment>
+          </PrivateRoute >
+
           <Route exact path='/'>
             <Shop></Shop>:
           </Route>
@@ -50,17 +54,17 @@ function App() {
             <ProductDetails></ProductDetails>
           </Route>
 
-          <Route path='*/'>
+      <Route path='*/'>
             <NotFound></NotFound>
-          </Route>
+          </Route>    
+
+
           
         </Switch>
       </Router>
 
 
-   
-      
-      </UserContext.Provider> 
+      </AuthContextProvider> 
     </div>
   );
 }

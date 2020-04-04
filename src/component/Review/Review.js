@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabaseCart, removeFromDatabaseCart, processOrder } from '../../utilities/databaseManager';
+import { getDatabaseCart, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import ReviewItems from '../ReviewItems/ReviewItems';
-import happyImage from  '../../images/giphy.gif'
 import Cart from '../Cart/Cart';
 import  './Review.css'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../login/useAuth';
 
 
 const Review = () => {
 
     const [cart, setCart] = useState([])
-    const [orderPlace, setOrderPlace] = useState(false)
+    const auth = useAuth()
 
-    const handlePlaceOrder = ()=>{
-        setCart([])
-        setOrderPlace(true)
-        processOrder()
-    }
+
 
     const removeItem = (key) => {
         const newCart = cart.filter(pd => pd.key !== key )
@@ -28,7 +25,7 @@ const Review = () => {
         const saveCard = getDatabaseCart();
         const productKey = Object.keys(saveCard)
 
-        fetch('http://localhost:3100/getProductsByKey',{
+        fetch('https://blooming-thicket-11100.herokuapp.com/getProductsByKey',{
             method: 'post',
             body: JSON.stringify(productKey),
             headers: {
@@ -49,10 +46,7 @@ const Review = () => {
     },[])
 
 
-    let thankyou  ;
-      if(orderPlace){
-        thankyou =  <img className='thankyouImg' src={happyImage} alt=""/>
-    }
+
 
     return (
         <div className="shop-container">
@@ -61,14 +55,21 @@ const Review = () => {
                     cart.map(pd => <ReviewItems removeItem={removeItem} key={pd.key} cardProduct={pd}></ReviewItems> )
 
                 }
+                
                 {
-                    thankyou
+                    !cart.length && <h1>Add some product</h1>
                 }
         </div>
         <div className="cart-area">
-            <Cart cart={cart}>
-           <button onClick={handlePlaceOrder} className="addToCard">Place Order</button>
-            
+            <Cart cart={cart}> 
+                <Link to="shipment">
+                    {
+                        auth.user ?
+                        <button className="main-button">Proceed Checkout</button>
+                        :
+                        <button className="main-button">Login to Proceed</button>
+                    }
+                </Link>
             </Cart>
         </div>
 
